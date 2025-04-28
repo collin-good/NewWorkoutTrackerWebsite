@@ -1,0 +1,74 @@
+﻿@page "/"
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc
+@using WorkoutTrackerWebsite.Controllers
+@using WorkoutTrackerWebsite.Models
+@inject WorkoutController WorkoutController
+
+<title>workout list</title>
+
+<body>
+    <button @onclick="ShowAddWorkoutDialog">Add Workout</button>
+
+    <h1>Previous workouts</h1>
+    <table>
+        <thead>
+            <th>Date</th>
+            <th>Workout Name</th>
+            <th>Weight</th>
+            <th>Reps</th>
+            <th>Sets</th>
+        </thead>
+        <tbody>
+            @if (workouts is not null && workouts.Count() is not 0)
+            {
+                foreach (Workout? workout in workouts)
+                {
+                    <tr>
+                        <td>@workout.Date.ToString("d")</td>
+                        <td>@workout.Name</td>
+                        <td>@workout.Weight</td>
+                        <td>@workout.Reps</td>
+                        <td>@workout.Sets</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <p>No workouts avalible yet</p>
+            }
+        </tbody>
+    </table>
+</body>
+<scripts>
+    <partial name="_ValidationScriptsPartial" />
+</scripts>
+
+@if (showingAddWorkoutDialog)
+{
+    <AddWorkoutDialog></AddWorkoutDialog>
+}
+
+@code {
+    List<Workout>? workouts { get; set; } = new();
+    public Action? OnUpdateWorkouts;
+
+    bool showingAddWorkoutDialog;
+
+    protected override void OnInitialized()
+    {
+        OnUpdateWorkouts += UpdateWorkouts;
+        UpdateWorkouts();
+    }
+
+    public void ShowAddWorkoutDialog()
+    {
+        showingAddWorkoutDialog = true;
+    }
+
+    public async void UpdateWorkouts()
+    {
+        ActionResult<List<Workout>> results = await WorkoutController.GetAll();
+        workouts = results.Value;
+    }
+}

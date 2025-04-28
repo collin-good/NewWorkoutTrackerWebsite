@@ -1,0 +1,50 @@
+@using WorkoutTrackerWebsite.Models;
+@using WorkoutTrackerWebsite.Controllers;
+@inject HttpClient HttpClient
+@inject WorkoutController workoutController;
+
+<div class="dialog-container">
+    <div class="dialog">
+        <div class="dialog-title">
+            <h2>Enter your workout: </h2>
+        </div>
+        <form class="dialog-body">
+            <label>workout name:</label>
+            <input @bind="name">
+
+            <label>Date: </label>
+            <InputDate TValue="DateOnly" @bind="date"></InputDate>
+
+            <label>Weight: </label>
+            <InputNumber TValue="Int64" @bind="weight"></InputNumber>
+
+            <label>Sets: </label>
+            <InputNumber TValue="Int64" @bind="sets"></InputNumber>
+
+            <label>Reps: </label>
+            <InputNumber TValue="Int64" @bind="reps"></InputNumber>
+
+            <button @onclick="AddNewWorkout"></button>
+        </form>
+    </div>
+</div>
+
+@code
+{
+    string name { get; set; } = "";
+    DateOnly date { get; set; } = DateOnly.FromDateTime(DateTime.Today);
+    int weight = 0, sets = 0, reps = 0;
+
+    void AddNewWorkout()
+    {
+        Workout newWorkout = new Workout();
+
+        newWorkout.Name = name;
+        newWorkout.Date = date;
+        newWorkout.Weight = weight;
+        newWorkout.Sets = sets;
+        newWorkout.Reps = reps;
+
+        workoutController.Create(newWorkout);
+    }
+}

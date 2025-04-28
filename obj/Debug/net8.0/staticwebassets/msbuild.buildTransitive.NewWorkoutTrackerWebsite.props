@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\NewWorkoutTrackerWebsite.props" />
+</Project>
