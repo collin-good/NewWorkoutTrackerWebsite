@@ -9,20 +9,20 @@
             <h2>Enter your workout: </h2>
         </div>
         <form class="dialog-body">
-            <label>workout name:</label>
-            <input @bind="name">
+            <label>workout name: </label>
+            <input @bind="@name">
 
             <label>Date: </label>
-            <InputDate TValue="DateOnly" @bind="date"></InputDate>
+            <InputDate TValue="DateOnly" @bind-Value="@date"></InputDate>
 
             <label>Weight: </label>
-            <InputNumber TValue="Int64" @bind="weight"></InputNumber>
+            <input TValue="Int64" @bind="@weight"></input>
 
             <label>Sets: </label>
-            <InputNumber TValue="Int64" @bind="sets"></InputNumber>
+            <input TValue="Int64" @bind="@sets"></input>
 
             <label>Reps: </label>
-            <InputNumber TValue="Int64" @bind="reps"></InputNumber>
+            <input TValue="Int64" @bind="@reps"></input>
 
             <button @onclick="AddNewWorkout"></button>
         </form>
@@ -46,5 +46,11 @@
         newWorkout.Reps = reps;
 
         workoutController.Create(newWorkout);
+
+        name = "";
+        date = DateOnly.FromDateTime(DateTime.Today);
+        weight = 0;
+        sets = 0;
+        reps = 0;
     }
 }
