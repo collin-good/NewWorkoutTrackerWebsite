@@ -148,7 +148,6 @@ D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\staticwebassets\msbuild.buildMul
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.NewWorkoutTrackerWebsite.props
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\staticwebassets.pack.json
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
-D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\scopedcss\bundle\NewWorkoutTrackerWebsite.styles.css
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\scopedcss\projectbundle\NewWorkoutTrackerWebsite.bundle.scp.css
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\NewWorko.7C05C127.Up2Date

@@ -6,6 +6,9 @@
 @inject WorkoutController WorkoutController
 
 <title>workout list</title>
+<style>
+    site.css
+</style>
 
 <body>
     <button @onclick="ShowAddWorkoutDialog">Add Workout</button>
@@ -13,11 +16,11 @@
     <h1>Previous workouts</h1>
     <table>
         <thead>
-            <th>Date</th>
-            <th>Workout Name</th>
-            <th>Weight</th>
-            <th>Reps</th>
-            <th>Sets</th>
+            <th class="workout-table">Workout Name</th>
+            <th class="workout-table">Date</th>
+            <th class="workout-table">Weight</th>
+            <th class="workout-table">Reps</th>
+            <th class="workout-table">Sets</th>
         </thead>
         <tbody>
             @if (workouts is not null && workouts.Count() is not 0)
