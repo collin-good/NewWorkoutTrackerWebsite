@@ -2,7 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace WorkoutTrackerWebsite.Models;
-public class Workout 
+
+public class Workout
 {
     public Workout() { }
 
@@ -20,12 +21,15 @@ public class Workout
     [MaxLength(100)]
     public string Name { get; set; } = default!;
     [Required]
-    public DateOnly Date { get; set; }
+    public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Today);
+    [Required]
     public int Weight { get; set; }
     [Required]
-    public int Sets { get; set; }
+    [Range(1, 15, ErrorMessage = "Sets have a minimum value of 1 and a maximum value of 15")]
+    public int Sets { get; set; } = 1;
     [Required]
-    public int Reps { get; set; }
+    [Range(1, 150, ErrorMessage = "Reps have a minimum value of 1 and a maximum value of 150")]
+    public int Reps { get; set; } = 1;
 
     public override bool Equals(object? obj)
     {
