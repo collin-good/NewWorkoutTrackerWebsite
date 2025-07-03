@@ -1,6 +1,4 @@
 ﻿@page "/"
-@using System.Globalization
-@using Microsoft.AspNetCore.Mvc
 @using WorkoutTrackerWebsite.Controllers
 @using WorkoutTrackerWebsite.Models
 @inject WorkoutController WorkoutController
@@ -11,7 +9,11 @@
 </style>
 
 <body>
-    <button @onclick="ShowAddWorkoutDialog">Add Workout</button>
+    <button @onclick="(() => 
+        {
+        showingAddWorkoutDialog = true;
+        isUpdatingWorkout = false;
+        })">Add Workout</button>
 
     <h1>Previous workouts</h1>
     <table>
@@ -21,6 +23,8 @@
             <th class="workout-table">Weight</th>
             <th class="workout-table">Reps</th>
             <th class="workout-table">Sets</th>
+            <th class="workout-table"></th>
+            <th class="workout-table"></th>
         </thead>
         <tbody>
             @if (workouts is not null && workouts.Count() is not 0)
@@ -33,6 +37,12 @@
                         <td>@workout.Weight</td>
                         <td>@workout.Reps</td>
                         <td>@workout.Sets</td>
+                        <td @onclick="(() => {
+                            this.workout = workout;
+                            isUpdatingWorkout = true;
+                            showingAddWorkoutDialog = true;
+                            })">Edit</td>
+                        <td @onclick="(() => WorkoutController.DeleteWorkout(workout.Id))">Delete</td>
                     </tr>
                 }
             }
@@ -43,35 +53,42 @@
         </tbody>
     </table>
 </body>
-<scripts>
-    <partial name="_ValidationScriptsPartial" />
-</scripts>
+
 
 @if (showingAddWorkoutDialog)
 {
-    <AddWorkoutDialog></AddWorkoutDialog>
+    <AddWorkoutDialog
+    WorkoutParam=workout
+    OnConfirmWorkoutAdd="AddWorkoutToDatabase"
+    OnCancelWorkoutAdd="CancelAddWorkoutDialog"></AddWorkoutDialog>
 }
 
 @code {
+    bool showingAddWorkoutDialog = false;
+    bool isUpdatingWorkout = false;
+    Workout workout = new Workout();
     List<Workout>? workouts { get; set; } = new();
-    public Action? OnUpdateWorkouts;
-
-    bool showingAddWorkoutDialog;
 
     protected override void OnInitialized()
     {
-        OnUpdateWorkouts += UpdateWorkouts;
-        UpdateWorkouts();
+        workout = new Workout();
+        UpdateWorkoutList();
     }
 
-    public void ShowAddWorkoutDialog()
+    public void AddWorkoutToDatabase()
     {
-        showingAddWorkoutDialog = true;
+        (isUpdatingWorkout) ? WorkoutController.UpdateWorkout(Workout) : WorkoutController.CreateNewWorkout(workout);
+        UpdateWorkoutList();
+    }
+    public void CancelAddWorkoutDialog()
+    {
+        showingAddWorkoutDialog = false;
+        workout = new Workout();
     }
 
-    public async void UpdateWorkouts()
-    {
-        ActionResult<List<Workout>> results = await WorkoutController.GetAll();
-        workouts = results.Value;
+    using Microsoft.EntityFrameworkCore.Diagnostics;
+#line default
+{
+        workouts = (await WorkoutController.GetAll()).Value;
     }
 }

@@ -26,7 +26,7 @@ public class WorkoutController : ControllerBase
 
     //GET by ID
     [HttpGet("{id:int}")]
-    public ActionResult<Workout> Get(int id)
+    public ActionResult<Workout> GetWorkoutsByID(int id)
     {
         var workout = _service.Get(id);
         if (workout is null)
@@ -51,15 +51,15 @@ public class WorkoutController : ControllerBase
 
     //POST
     [HttpPost]
-    public IActionResult Create(Workout workout)
+    public IActionResult CreateNewWorkout(Workout workout)
     {
         _service.Add(workout);
-        return CreatedAtAction(nameof(Get), new { id = workout.Id }, workout);
+        return CreatedAtAction(nameof(GetWorkoutsByID), new { id = workout.Id }, workout);
     }
 
     //PUT
     [HttpPut]
-    public IActionResult Update(int id, Workout workout)
+    public IActionResult UpdateExistingWorkout(int id, Workout workout)
     {
         if (id != workout.Id)
             return BadRequest();
@@ -74,7 +74,7 @@ public class WorkoutController : ControllerBase
 
     //DELETE
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult DeleteWorkout(int id)
     {
         var workout = _service.Get(id);
         if (workout is null)

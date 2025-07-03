@@ -1,61 +1,49 @@
 @using WorkoutTrackerWebsite.Models;
 @using WorkoutTrackerWebsite.Controllers;
+@using NewWorkoutTrackerWebsite.services;
 @inject HttpClient HttpClient
 @inject WorkoutController workoutController;
+@inject WorkoutDialogStatus WorkoutDialogStatus;
 
 <div class="dialog-container">
     <div class="dialog">
         <div class="dialog-title">
             <h2>Enter your workout: </h2>
         </div>
-        <form class="dialog-body">
+        <EditForm class="dialog-body" Model=@WorkoutParam OnValidSubmit="@OnConfirmWorkoutAdd">
+            <DataAnnotationsValidator />
             <label>workout name: </label>
-            <input @bind="@name">
+            <InputText @bind-Value="@WorkoutParam.Name" />
+            <ValidationMessage For="@(() => WorkoutParam.Name)" />
 
             <label>Date: </label>
-            <InputDate TValue="DateOnly" @bind-Value="@date"></InputDate>
+            <InputDate @bind-Value="@WorkoutParam.Date"></InputDate>
+            <ValidationMessage For="@(() => WorkoutParam.Date)" />
 
             <label>Weight: </label>
-            <input TValue="Int64" @bind="@weight">
+            <InputNumber @bind-Value="@WorkoutParam.Weight" />
+            <ValidationMessage For="@(() => WorkoutParam.Weight)" />
 
             <label>Sets: </label>
-            <input TValue="Int64" @bind="@sets">
+            <InputNumber @bind-Value="@WorkoutParam.Sets" />
+            <ValidationMessage For="@(() => WorkoutParam.Sets)" />
 
             <label>Reps: </label>
-            <input TValue="Int64" @bind="@reps">
+            <InputNumber @bind-Value="@WorkoutParam.Reps" />
+            <ValidationMessage For="@(() => WorkoutParam.Reps)" />
+        </EditForm>
 
-            <button @onclick="AddNewWorkout"></button>
-        </form>
+        <div class="dialog-buttons">
+            <button class="btn btn-secondary mr-auto" @onclick="OnCancelWorkoutAdd">Cancel</button>
+
+            <button class="btn btn-secondary mr-auto" type="reset">Add</button>
+        </div>
     </div>
 </div>
 
 @code
 {
-    string name { get; set; } = "";
-    DateOnly date { get; set; } = DateOnly.FromDateTime(DateTime.Today);
-    int weight = 0, sets = 0, reps = 0;
-
-    void AddNewWorkout()
-    {
-        Workout newWorkout = new Workout();
-
-        newWorkout.Name = name;
-        newWorkout.Date = date;
-        newWorkout.Weight = weight;
-        newWorkout.Sets = sets;
-        newWorkout.Reps = reps;
-
-        workoutController.Create(newWorkout);
-
-        name = "";
-        date = DateOnly.FromDateTime(DateTime.Today);
-        weight = 0;
-        sets = 0;
-        reps = 0;
-    }
+    [Parameter] public Workout? WorkoutParam { get; set; }
+    [Parameter] public EventCallback OnConfirmWorkoutAdd { get; set; }
+    [Parameter] public EventCallback OnCancelWorkoutAdd { get; set; }
 }
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-#nullable disable
-#line default
-#line hidden
