@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using WorkoutTrackerWebsite.Data;
@@ -53,6 +54,9 @@ public class WorkoutController : ControllerBase
     [HttpPost]
     public IActionResult CreateNewWorkout(Workout workout)
     {
+        if (workout is null || workout == new Workout())
+            return BadRequest();
+
         _service.Add(workout);
         return CreatedAtAction(nameof(GetWorkoutsByID), new { id = workout.Id }, workout);
     }
