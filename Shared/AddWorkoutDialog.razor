@@ -1,18 +1,18 @@
 @using WorkoutTrackerWebsite.Models;
 @using WorkoutTrackerWebsite.Controllers;
-@using NewWorkoutTrackerWebsite.services;
 @inject HttpClient HttpClient
-@inject WorkoutController workoutController;
-@inject WorkoutDialogStatus WorkoutDialogStatus;
+@inject WorkoutController workoutController
 
 <div class="dialog-container">
     <div class="dialog">
         <div class="dialog-title">
             <h2>Enter your workout: </h2>
         </div>
-        <EditForm class="dialog-body" Model=@WorkoutParam OnValidSubmit="@OnConfirmWorkoutAdd">
+        <EditForm class="dialog-body" Model=@WorkoutParam
+            OnValidSubmit="@(() =>OnConfirmWorkoutAdd.InvokeAsync(WorkoutParam))">
             <DataAnnotationsValidator />
-            <label>workout name: </label>
+
+            <label>Workout Name: </label>
             <InputText @bind-Value="@WorkoutParam.Name" />
             <ValidationMessage For="@(() => WorkoutParam.Name)" />
 
@@ -28,9 +28,10 @@
             <InputNumber @bind-Value="@WorkoutParam.Sets" />
             <ValidationMessage For="@(() => WorkoutParam.Sets)" />
 
-            <label>Reps: </label>
+            <label>Total Reps: </label>
             <InputNumber @bind-Value="@WorkoutParam.Reps" />
             <ValidationMessage For="@(() => WorkoutParam.Reps)" />
+
         </EditForm>
 
         <div class="dialog-buttons">
@@ -43,7 +44,7 @@
 
 @code
 {
-    [Parameter] public Workout? WorkoutParam { get; set; }
-    [Parameter] public EventCallback OnConfirmWorkoutAdd { get; set; }
+    [Parameter] public Workout WorkoutParam { get; set; } = new();
+    [Parameter] public EventCallback<Workout> OnConfirmWorkoutAdd { get; set; }
     [Parameter] public EventCallback OnCancelWorkoutAdd { get; set; }
 }

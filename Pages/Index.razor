@@ -1,4 +1,5 @@
 ﻿@page "/"
+
 @using WorkoutTrackerWebsite.Controllers
 @using WorkoutTrackerWebsite.Models
 @inject WorkoutController WorkoutController
@@ -11,20 +12,20 @@
 <body>
     <button @onclick="(() => 
         {
-        showingAddWorkoutDialog = true;
         isUpdatingWorkout = false;
+        showingAddWorkoutDialog = true;
         })">Add Workout</button>
 
     <h1>Previous workouts</h1>
-    <table>
+    <table class="workout-table">
         <thead>
-            <th class="workout-table">Workout Name</th>
-            <th class="workout-table">Date</th>
-            <th class="workout-table">Weight</th>
-            <th class="workout-table">Reps</th>
-            <th class="workout-table">Sets</th>
-            <th class="workout-table"></th>
-            <th class="workout-table"></th>
+            <th>Workout Name</th>
+            <th>Date</th>
+            <th>Weight</th>
+            <th>Sets</th>
+            <th>Total Reps</th>
+            <th></th>
+            <th></th>
         </thead>
         <tbody>
             @if (workouts is not null && workouts.Count() is not 0)
@@ -35,14 +36,18 @@
                         <td>@workout.Date.ToString("d")</td>
                         <td>@workout.Name</td>
                         <td>@workout.Weight</td>
-                        <td>@workout.Reps</td>
                         <td>@workout.Sets</td>
-                        <td @onclick="(() => {
+                        <td>@workout.Reps</td>
+                        <td>
+                            <button @onclick="(() => {
                             this.workout = workout;
                             isUpdatingWorkout = true;
                             showingAddWorkoutDialog = true;
-                            })">Edit</td>
-                        <td @onclick="(() => WorkoutController.DeleteWorkout(workout.Id))">Delete</td>
+                            })">Edit</button></td>
+                        <td>
+                            <button @onclick="(() => {WorkoutController.DeleteWorkout(workout.Id);
+                                UpdateWorkoutList();})">Delete</button>
+                            </td>
                     </tr>
                 }
             }
@@ -75,20 +80,28 @@
         UpdateWorkoutList();
     }
 
-    public void AddWorkoutToDatabase()
+    public void AddWorkoutToDatabase(Workout workout)
     {
-        (isUpdatingWorkout) ? WorkoutController.UpdateWorkout(Workout) : WorkoutController.CreateNewWorkout(workout);
+        //! Workout additions and updates are not being sent to the database
+        if (isUpdatingWorkout)
+        {
+            WorkoutController.UpdateExistingWorkout(workout.Id, workout);
+        }
+        else
+        {
+            WorkoutController.CreateNewWorkout(workout);
+        }
+
         UpdateWorkoutList();
+        showingAddWorkoutDialog = false;
     }
     public void CancelAddWorkoutDialog()
     {
         showingAddWorkoutDialog = false;
         workout = new Workout();
     }
-
-    using Microsoft.EntityFrameworkCore.Diagnostics;
-#line default
-{
+    public async void UpdateWorkoutList()
+    {
         workouts = (await WorkoutController.GetAll()).Value;
     }
 }

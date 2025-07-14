@@ -2,12 +2,29 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 100%;
+    height: 100%;
 }
 
-.workout-table{
+.workout-table table{
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.workout-table th{
     width: 150px;
     height: 20px;
     margin-left: 10px;
+}
+
+.workout-table tr {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
 h1:focus {
@@ -75,7 +92,8 @@ a, .btn-link {
     align-self: center;
     margin: auto;
     width: 700px;
-    max-height: calc(100% - 3rem);
+    height: auto;
+    margin-top: 50px;
     animation: dialog-entry 0.4s;
     animation-timing-function: cubic-bezier(0.075, 0.820, 0.165, 1.000);
 }
@@ -107,7 +125,7 @@ a, .btn-link {
 
 .dialog-body {
     flex-grow: 1;
-    padding: 0.5rem 3rem 1rem 0;
+    padding: 0.5rem 3rem 1rem;
 }
 
 .dialog-body>div {
@@ -120,12 +138,13 @@ a, .btn-link {
     text-align: right;
     width: 200px;
     margin: 0 1.5rem;
+    padding-top: 1rem;
 }
 
 .dialog-body input,
 .dialog-body select {
     flex-grow: 1;
-    width: unset;
+    width: 300px;
 }
 
 .dialog-Button{

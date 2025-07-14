@@ -47,7 +47,7 @@ public class WorkoutService
     {
         List<Workout> workouts = _context.Get();
 
-        return await QuickSort(workouts, 0, workouts.Count() - 1);
+        return (workouts is not null) ? await QuickSort(workouts, 0, workouts.Count() - 1) : new List<Workout>();
     }
 
     /// <summary>
