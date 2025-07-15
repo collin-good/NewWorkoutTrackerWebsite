@@ -8,8 +8,8 @@
         <div class="dialog-title">
             <h2>Enter your workout: </h2>
         </div>
-        <EditForm class="dialog-body" Model=@WorkoutParam
-            OnValidSubmit="@(() =>OnConfirmWorkoutAdd.InvokeAsync(WorkoutParam))">
+        <EditForm class="dialog-body" Model=@WorkoutParam OnValidSubmit="OnValidSubmit"
+            OnInvalidSubmit="@(() => isError = true)">
             <DataAnnotationsValidator />
 
             <label>Workout Name: </label>
@@ -32,13 +32,9 @@
             <InputNumber @bind-Value="@WorkoutParam.Reps" />
             <ValidationMessage For="@(() => WorkoutParam.Reps)" />
 
+            <button @onclick="OnCancelWorkoutAdd">Cancel</button>
+            <input type="submit" class="btn btn-primary" value="Add" disabled=@isError />
         </EditForm>
-
-        <div class="dialog-buttons">
-            <button class="btn btn-secondary mr-auto" @onclick="OnCancelWorkoutAdd">Cancel</button>
-
-            <button class="btn btn-secondary mr-auto" type="reset">Add</button>
-        </div>
     </div>
 </div>
 
@@ -47,4 +43,12 @@
     [Parameter] public Workout WorkoutParam { get; set; } = new();
     [Parameter] public EventCallback<Workout> OnConfirmWorkoutAdd { get; set; }
     [Parameter] public EventCallback OnCancelWorkoutAdd { get; set; }
+
+    bool isError = false;
+
+    void OnValidSubmit()
+    {
+        isError = false;
+        OnConfirmWorkoutAdd.InvokeAsync(WorkoutParam);
+    }
 }

@@ -3,6 +3,8 @@
 @using WorkoutTrackerWebsite.Controllers
 @using WorkoutTrackerWebsite.Models
 @inject WorkoutController WorkoutController
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
 
 <title>workout list</title>
 <style>
@@ -85,11 +87,13 @@
         //! Workout additions and updates are not being sent to the database
         if (isUpdatingWorkout)
         {
-            WorkoutController.UpdateExistingWorkout(workout.Id, workout);
+            HttpClient.PutAsJsonAsync($"{NavigationManager.BaseUri}controller", (workout.Id, workout));
+            //WorkoutController.UpdateExistingWorkout(workout.Id, workout);
         }
         else
         {
-            WorkoutController.CreateNewWorkout(workout);
+            HttpClient.PostAsJsonAsync($"{NavigationManager.BaseUri}controller", workout);
+            //WorkoutController.CreateNewWorkout(workout);
         }
 
         UpdateWorkoutList();
@@ -100,8 +104,10 @@
         showingAddWorkoutDialog = false;
         workout = new Workout();
     }
-    public async void UpdateWorkoutList()
+    public void UpdateWorkoutList()
     {
-        workouts = (await WorkoutController.GetAll()).Value;
+        //TODO make this work with a data stream
+        workouts = (List<Workout>) HttpClient.GetFromJsonAsAsyncEnumerable<List<Workout>>($"{NavigationManager.BaseUri}controller");
+        //workouts = (await WorkoutController.GetAll().Result).value;
     }
 }
