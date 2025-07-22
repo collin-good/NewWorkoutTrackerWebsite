@@ -157,3 +157,8 @@ D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\NewWorkoutTrackerWebsite.pdb
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\NewWorkoutTrackerWebsite.genruntimeconfig.cache
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\ref\NewWorkoutTrackerWebsite.dll
 D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\NewWorkoutTrackerWebsite.sourcelink.json
+D:\C#\NewWorkoutTrackerWebsite\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\C#\NewWorkoutTrackerWebsite\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\C#\NewWorkoutTrackerWebsite\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\C#\NewWorkoutTrackerWebsite\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\C#\NewWorkoutTrackerWebsite\obj\Debug\net8.0\NewWorkoutTrackerWebsite.MvcApplicationPartsAssemblyInfo.cs

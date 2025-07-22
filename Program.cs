@@ -8,11 +8,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
+
 builder.Services.AddSqlite<WorkoutContext>("Data Source=WorkoutTracker.db");
 builder.Services.AddScoped<WorkoutService>();
 builder.Services.AddScoped<WorkoutController>();
 
+builder.Services.AddMvc();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

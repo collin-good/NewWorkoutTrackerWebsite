@@ -104,10 +104,17 @@
         showingAddWorkoutDialog = false;
         workout = new Workout();
     }
-    public void UpdateWorkoutList()
+    public async void UpdateWorkoutList()
     {
-        //TODO make this work with a data stream
-        workouts = (List<Workout>) HttpClient.GetFromJsonAsAsyncEnumerable<List<Workout>>($"{NavigationManager.BaseUri}controller");
+        try
+        {
+            workouts = await HttpClient.GetFromJsonAsync<List<Workout>>($"{NavigationManager.BaseUri}controller");
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"Error {ex.Message}");
+        }
+
         //workouts = (await WorkoutController.GetAll().Result).value;
     }
 }

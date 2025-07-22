@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using WorkoutTrackerWebsite.Data;
@@ -12,6 +11,11 @@ namespace WorkoutTrackerWebsite.Controllers;
 public class WorkoutController : ControllerBase
 {
     WorkoutService _service;
+
+    /// <summary>
+    /// I'm not sure if the interface will get the WorkoutContext injected so this is left just in case
+    /// </summary>
+    /// <param name="context"></param>
     public WorkoutController(WorkoutContext context)
     {
         _service = new WorkoutService(context);
@@ -23,7 +27,13 @@ public class WorkoutController : ControllerBase
 
     //GET
     [HttpGet]
-    public async Task<ActionResult<List<Workout>>> GetAll() => await _service.GetSortedWorkouts();
+    public ActionResult<List<Workout>> GetAll()
+    {
+        var task = _service.GetSortedWorkouts();
+        task.Start();
+        task.Wait();
+        return Ok(task.Result);
+    }
 
     //GET by ID
     [HttpGet("{id:int}")]
@@ -33,7 +43,7 @@ public class WorkoutController : ControllerBase
         if (workout is null)
             return NotFound();
 
-        return workout;
+        return Ok(workout);
     }
 
     //GET List by name
@@ -47,7 +57,7 @@ public class WorkoutController : ControllerBase
         if (results.Count == 0)
             return NotFound();
 
-        return results;
+        return Ok(results);
     }
 
     //POST
@@ -56,6 +66,8 @@ public class WorkoutController : ControllerBase
     {
         if (workout is null || workout == new Workout())
             return BadRequest();
+
+        workout.Name = HttpUtility.HtmlEncode(workout.Name);
 
         _service.Add(workout);
         return CreatedAtAction(nameof(GetWorkoutsByID), new { id = workout.Id }, workout);
@@ -71,6 +83,8 @@ public class WorkoutController : ControllerBase
         var existingWorkout = _service.Get(workout.Id);
         if (existingWorkout is null)
             return NotFound();
+
+        workout.Name = HttpUtility.HtmlEncode(workout.Name);
 
         _service.Update(workout);
         return NoContent();
