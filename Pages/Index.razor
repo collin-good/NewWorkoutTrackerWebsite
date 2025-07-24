@@ -84,7 +84,7 @@
 
     public void AddWorkoutToDatabase(Workout workout)
     {
-        //! Workout additions and updates are not being sent to the database
+        @*! Workout additions and updates are not being sent to the database *@
         if (isUpdatingWorkout)
         {
             HttpClient.PutAsJsonAsync($"{NavigationManager.BaseUri}controller", (workout.Id, workout));
@@ -106,15 +106,16 @@
     }
     public async void UpdateWorkoutList()
     {
+        @*! HTTP requests are returning HTML not Json *@
         try
         {
-            workouts = await HttpClient.GetFromJsonAsync<List<Workout>>($"{NavigationManager.BaseUri}controller");
+            workouts = (await HttpClient.GetFromJsonAsync<List<Workout>>($"{NavigationManager.BaseUri}controller"));
         }
         catch(Exception ex)
         {
             Console.WriteLine($"Error {ex.Message}");
         }
 
-        //workouts = (await WorkoutController.GetAll().Result).value;
+        //workouts = WorkoutController.GetAll();
     }
 }

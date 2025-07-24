@@ -26,7 +26,7 @@ public class WorkoutTestContext : IWorkoutDB
 
     public void Delete(int id)
     {
-        Workout? workoutToDelete = Get(id);
+        Workout? workoutToDelete = GetById(id);
 
         if (workoutToDelete is not null)
             _testDB.Remove(workoutToDelete);
@@ -37,20 +37,20 @@ public class WorkoutTestContext : IWorkoutDB
         return CopyWorkoutList();
     }
 
-    public List<Workout> Get(string name)
+    public List<Workout> GetByName(string name)
     {
         string sanitizedString = HttpUtility.HtmlEncode(name);
         return _testDB.Where(w => w.Name.Contains(sanitizedString)).ToList();
     }
 
-    public Workout? Get(int id)
+    public Workout? GetById(int id)
     {
         return _testDB.FirstOrDefault(w => w.Id == id);
     }
 
     public void Update(Workout newWorkout)
     {
-        Workout? workoutToUpdate = Get(newWorkout.Id);
+        Workout? workoutToUpdate = GetById(newWorkout.Id);
 
         if (workoutToUpdate is not null)
         {
@@ -63,7 +63,7 @@ public class WorkoutTestContext : IWorkoutDB
     {
         List<Workout> copy = new List<Workout>();
 
-        for(int i = 0; i < _testDB.Count; i++)
+        for (int i = 0; i < _testDB.Count; i++)
             copy.Add(_testDB[i]);
 
         return copy;

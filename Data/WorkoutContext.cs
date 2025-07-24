@@ -14,11 +14,12 @@ public class WorkoutContext : DbContext, IWorkoutDB
     public void Add(Workout workout)
     {
         Workouts.Add(workout);
+        SaveChangesAsync();
     }
 
     public void Delete(int id)
     {
-        Workout? workout = Get(id);
+        Workout? workout = GetById(id);
         if (workout is not null)
         {
             Workouts.Remove(workout);
@@ -31,12 +32,12 @@ public class WorkoutContext : DbContext, IWorkoutDB
         return Workouts.AsNoTracking().ToList();
     }
 
-    public Workout? Get(int id)
+    public Workout? GetById(int id)
     {
         return Workouts.Find(id);
     }
 
-    public List<Workout> Get(string name)
+    public List<Workout> GetByName(string name)
     {
         string sanitizedInput = HttpUtility.HtmlEncode(name);
 
@@ -45,7 +46,7 @@ public class WorkoutContext : DbContext, IWorkoutDB
 
     public void Update(Workout newWorkout)
     {
-        Workout? workoutToUpdate = Get(newWorkout.Id);
+        Workout? workoutToUpdate = GetById(newWorkout.Id);
         if (workoutToUpdate is null)
         {
             throw new InvalidOperationException();

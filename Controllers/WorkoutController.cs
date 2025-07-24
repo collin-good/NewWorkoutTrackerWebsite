@@ -29,17 +29,14 @@ public class WorkoutController : ControllerBase
     [HttpGet]
     public ActionResult<List<Workout>> GetAll()
     {
-        var task = _service.GetSortedWorkouts();
-        task.Start();
-        task.Wait();
-        return Ok(task.Result);
+        return Ok(_service.GetSortedWorkouts());
     }
 
     //GET by ID
     [HttpGet("{id:int}")]
     public ActionResult<Workout> GetWorkoutsByID(int id)
     {
-        var workout = _service.Get(id);
+        var workout = _service.GetByID(id);
         if (workout is null)
             return NotFound();
 
@@ -80,7 +77,7 @@ public class WorkoutController : ControllerBase
         if (id != workout.Id)
             return BadRequest();
 
-        var existingWorkout = _service.Get(workout.Id);
+        var existingWorkout = _service.GetByID(workout.Id);
         if (existingWorkout is null)
             return NotFound();
 
@@ -94,7 +91,7 @@ public class WorkoutController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteWorkout(int id)
     {
-        var workout = _service.Get(id);
+        var workout = _service.GetByID(id);
         if (workout is null)
             return NotFound();
 
