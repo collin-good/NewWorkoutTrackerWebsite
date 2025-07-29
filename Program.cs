@@ -9,6 +9,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSqlite<WorkoutContext>("Data Source=WorkoutTracker.db");
 builder.Services.AddScoped<WorkoutService>();
 builder.Services.AddScoped<WorkoutController>();
@@ -40,7 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapBlazorHub();
+//app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();

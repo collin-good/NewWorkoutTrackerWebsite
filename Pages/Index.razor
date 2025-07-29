@@ -87,12 +87,12 @@
         @*! Workout additions and updates are not being sent to the database *@
         if (isUpdatingWorkout)
         {
-            HttpClient.PutAsJsonAsync($"{NavigationManager.BaseUri}controller", (workout.Id, workout));
+            HttpClient.PutAsJsonAsync($"{NavigationManager.BaseUri}Workout", (workout.Id, workout));
             //WorkoutController.UpdateExistingWorkout(workout.Id, workout);
         }
         else
         {
-            HttpClient.PostAsJsonAsync($"{NavigationManager.BaseUri}controller", workout);
+            HttpClient.PostAsJsonAsync($"{NavigationManager.BaseUri}Workout", workout);
             //WorkoutController.CreateNewWorkout(workout);
         }
 
@@ -106,16 +106,17 @@
     }
     public async void UpdateWorkoutList()
     {
-        @*! HTTP requests are returning HTML not Json *@
+        @*! HTTP requests are returning error pages *@
         try
         {
-            workouts = (await HttpClient.GetFromJsonAsync<List<Workout>>($"{NavigationManager.BaseUri}controller"));
+            workouts = (await HttpClient.GetFromJsonAsync<List<Workout>>($"{NavigationManager.BaseUri}Workout"));
         }
         catch(Exception ex)
         {
             Console.WriteLine($"Error {ex.Message}");
         }
 
+        //this works, but I would like to use the http response to know how to use it
         //workouts = WorkoutController.GetAll();
     }
 }

@@ -6,8 +6,8 @@ using WorkoutTrackerWebsite.Services;
 
 namespace WorkoutTrackerWebsite.Controllers;
 
-[ApiController]
 [Route("[controller]")]
+[ApiController]
 public class WorkoutController : ControllerBase
 {
     WorkoutService _service;
@@ -25,14 +25,23 @@ public class WorkoutController : ControllerBase
         _service = new WorkoutService(context);
     }
 
-    //GET
+    /// <summary>
+    /// HTTP GET
+    /// Gets the list of workouts from WorkoutService and returns them with an OK HTTP response
+    /// 
+    /// !Currently returns an error page when using a http request
+    /// </summary>
+    /// <returns>The list of workouts or an empty list</returns>
     [HttpGet]
-    public ActionResult<List<Workout>> GetAll()
-    {
-        return Ok(_service.GetSortedWorkouts());
-    }
+    public ActionResult<List<Workout>> GetAll() => _service.GetSortedWorkouts();
 
-    //GET by ID
+    /// <summary>
+    /// HTTP GET 
+    /// Gets the workout (if it exists) with the provided ID
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>The workout with the specified ID or null</returns>
     [HttpGet("{id:int}")]
     public ActionResult<Workout> GetWorkoutsByID(int id)
     {
@@ -43,7 +52,13 @@ public class WorkoutController : ControllerBase
         return Ok(workout);
     }
 
-    //GET List by name
+    /// <summary>
+    /// HTTP GET
+    /// Gets a  list of workouts with the given name
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns>A list of workouts with the specified name or an empty list</returns>
     [HttpGet("{name}")]
     public ActionResult<List<Workout>> GetWorkoutsByName(string name)
     {
@@ -57,7 +72,13 @@ public class WorkoutController : ControllerBase
         return Ok(results);
     }
 
-    //POST
+    /// <summary>
+    /// HTTP POST
+    /// Adds a workout to the database
+    /// 
+    /// </summary>
+    /// <param name="workout"></param>
+    /// <returns>A CreatetedAtAction if successful or a BadRequest if not</returns>
     [HttpPost]
     public IActionResult CreateNewWorkout(Workout workout)
     {
@@ -70,7 +91,18 @@ public class WorkoutController : ControllerBase
         return CreatedAtAction(nameof(GetWorkoutsByID), new { id = workout.Id }, workout);
     }
 
-    //PUT
+    /// <summary>
+    /// HTTP PUT
+    /// Updates the workout at the given ID with the provided workout
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="workout"></param>
+    /// <returns>
+    /// NoContent if the update is successful, 
+    /// BadRequest if the given ID does not match the ID of the new workout, or 
+    /// Notfound if the given ID does not exist in the database
+    /// </returns>
     [HttpPut]
     public IActionResult UpdateExistingWorkout(int id, Workout workout)
     {
@@ -87,7 +119,12 @@ public class WorkoutController : ControllerBase
         return NoContent();
     }
 
-    //DELETE
+    /// <summary>
+    /// HTTP DELETE
+    /// Deletes the workout from the database with the given ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>NotFound if there is no workout in the database with the given ID, NoContent otherwise</returns>
     [HttpDelete("{id}")]
     public IActionResult DeleteWorkout(int id)
     {
