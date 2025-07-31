@@ -5,19 +5,20 @@ using WorkoutTrackerWebsite.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddMvc();
+builder.Services.AddHttpClient<WorkoutController>();
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-builder.Services.AddHttpClient();
-
+builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddServerSideBlazor();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSqlite<WorkoutContext>("Data Source=WorkoutTracker.db");
+
 builder.Services.AddScoped<WorkoutService>();
 builder.Services.AddScoped<WorkoutController>();
+builder.Services.AddScoped<LoggerFactory>();
 
-builder.Services.AddMvc();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -43,7 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.MapBlazorHub();
+app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();

@@ -33,7 +33,7 @@
             <ValidationMessage For="@(() => WorkoutParam.Reps)" />
 
             <button @onclick="OnCancelWorkoutAdd">Cancel</button>
-            <input type="submit" class="btn btn-primary" value="Add" disabled=@isError />
+            <input type="submit" class="btn btn-primary" value=@((isUpdating) ? "Update" :"Add") disabled=@isError />
         </EditForm>
     </div>
 </div>
@@ -41,6 +41,7 @@
 @code
 {
     [Parameter] public Workout WorkoutParam { get; set; } = new();
+    [Parameter] public bool isUpdating { get; set; } = false;
     [Parameter] public EventCallback<Workout> OnConfirmWorkoutAdd { get; set; }
     [Parameter] public EventCallback OnCancelWorkoutAdd { get; set; }
 

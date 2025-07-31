@@ -53,7 +53,7 @@ public class WorkoutContext : DbContext, IWorkoutDB
         }
 
         workoutToUpdate = newWorkout;
-        Update(workoutToUpdate);
+        Workouts.Update(workoutToUpdate);
         SaveChangesAsync();
     }
 }

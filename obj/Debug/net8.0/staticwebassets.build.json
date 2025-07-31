@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ohhXXJqi+AfbXEn/7gpxD9fPAO43z6Wlm7+7RcgXErs=",
+  "Hash": "3QCA1uhU3WZaAiMPOb+Nua8wHtuaQujaT3L4jGrvQYo=",
   "Source": "NewWorkoutTrackerWebsite",
   "BasePath": "_content/NewWorkoutTrackerWebsite",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "D:\\C#\\NewWorkoutTrackerWebsite\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "SourceId": "NewWorkoutTrackerWebsite",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\C#\\NewWorkoutTrackerWebsite\\wwwroot\\",
+      "BasePath": "_content/NewWorkoutTrackerWebsite",
+      "RelativePath": "css/open-iconic/FONT-LICENSE",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
       "Identity": "D:\\C#\\NewWorkoutTrackerWebsite\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
@@ -205,25 +224,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
-    },
-    {
-      "Identity": "D:\\C#\\NewWorkoutTrackerWebsite\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
-      "SourceId": "NewWorkoutTrackerWebsite",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\C#\\NewWorkoutTrackerWebsite\\wwwroot\\",
-      "BasePath": "_content/NewWorkoutTrackerWebsite",
-      "RelativePath": "css/open-iconic/FONT-LICENSE",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
       "Identity": "D:\\C#\\NewWorkoutTrackerWebsite\\wwwroot\\css\\open-iconic\\ICON-LICENSE",

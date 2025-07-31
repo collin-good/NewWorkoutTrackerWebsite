@@ -6,23 +6,26 @@ using WorkoutTrackerWebsite.Services;
 
 namespace WorkoutTrackerWebsite.Controllers;
 
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class WorkoutController : ControllerBase
 {
     WorkoutService _service;
+    ILogger<WorkoutController> _logger;
 
     /// <summary>
     /// I'm not sure if the interface will get the WorkoutContext injected so this is left just in case
     /// </summary>
     /// <param name="context"></param>
-    public WorkoutController(WorkoutContext context)
+    public WorkoutController(WorkoutContext context, LoggerFactory logger)
     {
         _service = new WorkoutService(context);
+        _logger = logger.CreateLogger<WorkoutController>();
     }
-    public WorkoutController(IWorkoutDB context)
+    public WorkoutController(IWorkoutDB context, LoggerFactory logger)
     {
         _service = new WorkoutService(context);
+        _logger = logger.CreateLogger<WorkoutController>();
     }
 
     /// <summary>
@@ -33,8 +36,11 @@ public class WorkoutController : ControllerBase
     /// </summary>
     /// <returns>The list of workouts or an empty list</returns>
     [HttpGet]
-    public ActionResult<List<Workout>> GetAll() => _service.GetSortedWorkouts();
-
+    public ActionResult<List<Workout>> GetAll()
+    {
+        _logger.LogTrace("Called GetAll");
+        return _service.GetSortedWorkouts();
+    }
     /// <summary>
     /// HTTP GET 
     /// Gets the workout (if it exists) with the provided ID
