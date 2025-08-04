@@ -6,7 +6,7 @@ html, body {
     height: 100%;
 }
 
-.workout-table table{
+.workout-table table ,p {
     border: 1px solid;
     border-collapse: collapse;
     width: 100%;
