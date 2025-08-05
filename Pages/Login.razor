@@ -1,0 +1,34 @@
+@using WorkoutTrackerWebsite.Models
+
+<body>
+    <div>
+        <h1>@promptText</h1>
+        <button onclick=>@(() => IsLoggingIn = !IsLoggingIn)>
+            @(() => (IsLoggingIn) ? "New user? Register!" : "Returning user? Log In")
+        </button>
+    </div>
+
+    <div>
+        <EditForm Model="user">
+            <div>
+                <label>Email: </label>
+                <InputText @bind-Value="user.Email"></InputText>
+            </div>
+            <div>
+                <label>Username: </label>
+                <InputText @bind-Value="user.Username"></InputText>
+            </div>
+            <div>
+                <label>Password: </label>
+                <InputText @bind-Value="user.Password" AdditionalAttributes="password"></InputText>
+            </div>
+        </EditForm>
+    </div>
+</body>
+
+@code {
+    [Parameter] public bool IsLoggingIn { get; set; } = true;
+    string promptText = "Log In";
+    UserDB_DIT user = new();
+
+}
