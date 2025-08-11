@@ -1,27 +1,29 @@
+@page "/login"
 @using WorkoutTrackerWebsite.Models
 
 <body>
     <div>
         <h1>@promptText</h1>
-        <button onclick=>@(() => IsLoggingIn = !IsLoggingIn)>
-            @(() => (IsLoggingIn) ? "New user? Register!" : "Returning user? Log In")
+        <button onclick=@SwapRegister>
+            @registerText
         </button>
     </div>
 
     <div>
-        <EditForm Model="user">
+        <EditForm class="dialog-body" Model=@user OnSubmit="OnSubmitForm">
             <div>
                 <label>Email: </label>
-                <InputText @bind-Value="user.Email"></InputText>
-            </div>
-            <div>
-                <label>Username: </label>
-                <InputText @bind-Value="user.Username"></InputText>
+                <InputText @bind-Value="@user.Email"></InputText>
+                <ValidationMessage For="(() => user.Email)"></ValidationMessage>
             </div>
             <div>
                 <label>Password: </label>
-                <InputText @bind-Value="user.Password" AdditionalAttributes="password"></InputText>
+                <InputText @bind-Value="user.Password" type="@(showPassword ? "text" : "password")"></InputText>
+                <label>Show Password</label>
+                <InputCheckbox @bind-Value="showPassword"></InputCheckbox>
+                <ValidationMessage For="(() => user.Password)"></ValidationMessage>
             </div>
+            <input type="submit" value="@promptText">
         </EditForm>
     </div>
 </body>
@@ -30,5 +32,17 @@
     [Parameter] public bool IsLoggingIn { get; set; } = true;
     string promptText = "Log In";
     UserDB_DIT user = new();
+    bool showPassword = false;
+    string registerText = "New user? Register!";
 
+    public void SwapRegister()
+    {
+        IsLoggingIn = !IsLoggingIn;
+        registerText = (IsLoggingIn) ? "New user? Register!" : "Returning user? Log In";
+    }
+
+    void OnSubmitForm()
+    {
+        Console.WriteLine($"Submitted form: User {user.Email}, password {user.Password}");
+    }
 }
